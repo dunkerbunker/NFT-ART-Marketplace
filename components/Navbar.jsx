@@ -7,6 +7,9 @@ import Link from 'next/link';
 import images from '../assets';
 import { Button } from '.';
 
+// menu items component that takes in active tab as prop
+// and sets the active tab
+// generate link funcion assigns link based on count of item in list
 const MenuItems = ({ isMobile, active, setActive }) => {
   const generateLink = (i) => {
     switch (i) {
@@ -17,7 +20,7 @@ const MenuItems = ({ isMobile, active, setActive }) => {
         break;
     }
   };
-
+  // returns the menu items with correct classes and links in a combined component
   return (
     <ul className={`list-none flexCenter flex-row ${isMobile && 'flex-col h-full'}`}>
       {['Explore NFTs', 'Listed NFTs', 'My NFTs'].map((item, i) => (
@@ -39,10 +42,13 @@ const MenuItems = ({ isMobile, active, setActive }) => {
   );
 };
 
+// takes in setActive so that no other tab is highligted when this is pressed
+// and router to push to the correct page
 const ButtonGroup = ({ setActive, router }) => {
   const hasConnected = true;
 
   return hasConnected ? (
+    // button componenet is used from which is an import from components
     <Button
       btnName="Create"
       classStyles="mx-2 rounded-xl"
@@ -61,6 +67,7 @@ const ButtonGroup = ({ setActive, router }) => {
 };
 
 const Navbar = () => {
+  // all hooks being used
   const { theme, setTheme } = useTheme();
   const router = useRouter();
   const [active, setActive] = useState('Explore NFTs');
@@ -68,7 +75,9 @@ const Navbar = () => {
 
   return (
     <nav className="flexBetween w-full fixed z-10 p-4 flex-row border-b dark:bg-nft-dark bg-white dark:border-nft-black-1 border-nft-gray-1">
+      {/* putting logo on top left */}
       <div className="flex flex-1 flex-row justify-start">
+        {/* logo section */}
         <Link href="/">
           <div
             className="flexCenter md:hidden cursor-pointer"
@@ -86,6 +95,8 @@ const Navbar = () => {
             </p>
           </div>
         </Link>
+        {/* logo section end */}
+        {/* logo section mobile */}
         <Link href="/">
           <div
             className="hidden md:flex"
@@ -100,10 +111,13 @@ const Navbar = () => {
             />
           </div>
         </Link>
+        {/* logo section mobile end */}
       </div>
-
+      {/* Right side of navBar */}
       <div className="flex flex-initial flex-row justify-end">
+        {/* dark and light mode */}
         <div className="flex items-center mr-5">
+          {/* changes mode using theme provider by NEXT */}
           <input
             type="checkbox"
             className="checkbox"
@@ -113,9 +127,12 @@ const Navbar = () => {
           <label htmlFor="checkbox" className="flexBetween w-8 h-4 bg-black rounded-2xl p-1 relative label">
             <i className="fas fa-sun" />
             <i className="fas fa-moon" />
+            {/* white circle covering the icon not in use. Animiation of ball is in global css */}
             <div className="w-3 h-3 absolute bg-white rounded-full ball" />
           </label>
         </div>
+        {/* dark and light mode end */}
+        {/* menu items and button group using components with props passed in */}
         <div className="md:hidden flex">
           <MenuItems active={active} setActive={setActive} />
           <div className="ml-4">
@@ -123,7 +140,8 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-
+      {/* Mobile navigation bar start */}
+      {/* Mobile navigation bar open icon */}
       <div className="hidden md:flex ml-2">
         {isOpen ? (
           <Image
@@ -133,9 +151,11 @@ const Navbar = () => {
             height={20}
             alt="close"
             onClick={() => setIsOpen(false)}
+            // invert color based on theme
             className={`${theme === 'light' && 'filter-invert'}`}
           />
         ) : (
+          // mobile naviation bar close icon
           <Image
             src={images.menu}
             objectFit="contain"
@@ -146,7 +166,10 @@ const Navbar = () => {
             className={`${theme === 'light' && 'filter-invert'}`}
           />
         )}
+        {/* Mobile navigation bar end  */}
 
+        {/* Open the mobile navbar based on the isOpen state which is changed by clicking above icons */}
+        {/* Components follow same system as on large screens */}
         {isOpen && (
           <div className="fixed inset-0 top-65 dark:bg-nft-dark bg-white z-10 nav-h flex justify-between flex-col">
             <div className="flex-1 p-4">
@@ -158,6 +181,7 @@ const Navbar = () => {
           </div>
         )}
       </div>
+
     </nav>
   );
 };
