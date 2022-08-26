@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Button = ({ classStyles, btnName, handleClick }) => (
   <button
     type="button"

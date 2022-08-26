@@ -1,7 +1,9 @@
 import React from 'react';
 
 const CreatedNFTs = () => (
-  <div>CreatedNFTs</div>
+  <div>
+    CreatedNFTs
+  </div>
 );
 
 export default CreatedNFTs;
