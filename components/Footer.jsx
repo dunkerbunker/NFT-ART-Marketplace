@@ -5,9 +5,11 @@ import { useTheme } from 'next-themes';
 import images from '../assets';
 import { Button } from '.';
 
+// Component to render sections in footer
 const FooterLinks = ({ heading, items }) => (
   <div className="flex-1 justify-start items-start">
     <h3 className="font-poppins dark:text-white text-nft-black-1 font-semibold text-xl mb-10">{heading}</h3>
+    {/* loop through all items passed in to display under heading */}
     {items.map((item, i) => (
       <p key={i} className="font-poppins dark:text-white text-nft-black-1 font-normal test-base cursor-pointer dark:hover:text-nft-gray-1 hover:text-nft-black-1 my-3">{item}</p>
     ))}
@@ -43,12 +45,14 @@ const Footer = () => {
               className="h-full flex-1 w-full dark:bg-nft-black-2 bg-white px-4 rounded-md dark:text-white text-nft-black-1 font-normal text-xs minlg:text-lg outline-none"
             />
             <div className="flex-initial">
+              {/* use of button component */}
               <Button btnName="Email me" classStyles="rounded-md" />
             </div>
           </div>
         </div>
 
         <div className="flex-1 flexBetweenStart flex-wrap ml-10 md:ml-0 md:mt-8">
+          {/* use of footerLinks component made in the same file */}
           <FooterLinks heading="Art Marketplace" items={['Explore', 'How it Works', 'Contact Us']} />
           <FooterLinks heading="Support" items={['Help center', 'Terms of service', 'Legal', 'Privacy policy']} />
         </div>
@@ -56,9 +60,10 @@ const Footer = () => {
 
       <div className="flexCenter w-full mt-5 border-t dark:border-nft-black-1 border-nft-gray-1 sm:px-4 px-16">
         <div className="flexBetween flex-row w-full minmd:w-4/5 sm:flex-col mt-7">
-          <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-base"> CryptoKet, Inc. All Rights Reserved</p>
+          <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-base"> Art, Inc. All Rights Reserved</p>
           <div className="flex flex-row sm:mt-4">
             {[images.instagram, images.twitter, images.telegram, images.discord].map((image, i) => (
+              // display all social media icons at bottom of footer
               <div className="mx-2 cursor-pointer" key={i}>
                 <Image
                   src={image}

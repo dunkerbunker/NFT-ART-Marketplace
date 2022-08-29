@@ -11,6 +11,7 @@ const CreatorCard = ({ rank, creatorImage, creatorName, creatorEths }) => (
       </p>
     </div>
     <div className="my-2 flex justify-center">
+      {/* Image section start */}
       <div className="relative w-20 h-20 minlg:w-28 minlg:h-28">
         <Image
           src={creatorImage}
@@ -28,6 +29,7 @@ const CreatorCard = ({ rank, creatorImage, creatorName, creatorEths }) => (
           />
         </div>
       </div>
+      {/* Image section end */}
     </div>
     <div className="mt-3 minlg:mt-7 text-center flexCenter flex-col">
       <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-base">

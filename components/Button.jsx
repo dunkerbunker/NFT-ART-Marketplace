@@ -1,3 +1,4 @@
+// base styles are added upon with custom styles
 const Button = ({ classStyles, btnName, handleClick }) => (
   <button
     type="button"
