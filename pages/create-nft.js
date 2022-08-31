@@ -4,11 +4,12 @@ import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 
-import { Button } from '../components';
+import { Button, Input } from '../components';
 import images from '../assets';
 
 const CreateNFT = () => {
   const [fileUrl, setFileUrl] = useState(null);
+  const [fromInput, setFromInput] = useState({ price: '', name: '', description: '' });
   const { theme } = useTheme();
 
   const onDrop = useCallback(() => {
@@ -30,7 +31,7 @@ const CreateNFT = () => {
   ), [isDragActive, isDragAccept, isDragReject]);
 
   return (
-    <div className="flex justify-centersm:px-4 p-12">
+    <div className="flex justify-center sm:px-4 p-12">
       <div className="w-3/5 md:w-full">
         <h1 className="font-poppins dark:text-white text-nft-black-1 text-2xl minlg:text-4xl font-semibold ml-4 xs:ml-0">
           Upload your artwork as NFT!
@@ -78,6 +79,33 @@ const CreateNFT = () => {
               </aside>
             )}
           </div>
+        </div>
+
+        <Input
+          inputType="input"
+          title="Name"
+          placeholder="NFT art name"
+          handleCLick={(e) => setFromInput({ ...fromInput, name: e.target.value })}
+        />
+        <Input
+          inputType="textarea"
+          title="Description"
+          placeholder="NFT description"
+          handleCLick={(e) => setFromInput({ ...fromInput, description: e.target.value })}
+        />
+        <Input
+          inputType="number"
+          title="Price"
+          placeholder="NFT Price"
+          handleCLick={(e) => setFromInput({ ...fromInput, price: e.target.value })}
+        />
+
+        <div className="mt-7 w-full flex justify-end">
+          <Button
+            btnName="Create NFT"
+            className="rounded-xl"
+            handleCLick={() => {}}
+          />
         </div>
       </div>
     </div>
