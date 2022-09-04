@@ -6,6 +6,7 @@ import { create as ipfsHttpClient } from 'ipfs-http-client';
 
 import { MarketAddress, MarketAddressABi } from './constants';
 
+// info needed to be sent to IPFS when sending request
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0');
 
 // Create a context which is simpler solution than Redux
@@ -53,6 +54,7 @@ export const NFTProvider = ({ children }) => {
     }
   };
 
+  // function that uploads to IPFS
   const uploadToIPFS = async (file) => {
     try {
       const added = await client.add({ content: file });
@@ -65,6 +67,7 @@ export const NFTProvider = ({ children }) => {
     }
   };
 
+  // returning the provider to be used in the app
   return (
     <NFTContext.Provider value={{ nftCurrency, connectWallet, currentAccount, uploadToIPFS }}>
       {children}

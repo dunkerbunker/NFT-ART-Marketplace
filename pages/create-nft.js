@@ -12,8 +12,10 @@ const CreateNFT = () => {
   const [fileUrl, setFileUrl] = useState(null);
   const [fromInput, setFromInput] = useState({ price: '', name: '', description: '' });
   const { theme } = useTheme();
+  //  getting uploadToIPFS function from NFTContext
   const { uploadToIPFS } = useContext(NFTContext);
 
+  // function to be used in dropzone when dropped
   const onDrop = useCallback(async (acceptedFile) => {
     // upload image to blockchain aka IPFS
     const url = await uploadToIPFS(acceptedFile[0]);
@@ -46,6 +48,7 @@ const CreateNFT = () => {
             Upload File
           </p>
           <div className="mt-4">
+            {/* spreading props provided by getRootProps from the useDropzone hook */}
             <div {...getRootProps()} className={fileStyle}>
               <input {...getInputProps()} />
               <div className="flexCenter flex-col text-center">
@@ -90,18 +93,21 @@ const CreateNFT = () => {
           inputType="input"
           title="Name"
           placeholder="NFT art name"
+          // spreading the formInput object and replacing what is needed
           handleCLick={(e) => setFromInput({ ...fromInput, name: e.target.value })}
         />
         <Input
           inputType="textarea"
           title="Description"
           placeholder="NFT description"
+          // spreading the formInput object and replacing what is needed
           handleCLick={(e) => setFromInput({ ...fromInput, description: e.target.value })}
         />
         <Input
           inputType="number"
           title="Price"
           placeholder="NFT Price"
+          // spreading the formInput object and replacing what is needed
           handleCLick={(e) => setFromInput({ ...fromInput, price: e.target.value })}
         />
 
