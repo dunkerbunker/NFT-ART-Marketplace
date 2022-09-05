@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Buffer } from 'buffer';
 import Web3Modal from 'web3modal';
 import { ethers } from 'ethers';
 import axios from 'axios';
@@ -7,7 +8,20 @@ import { create as ipfsHttpClient } from 'ipfs-http-client';
 import { MarketAddress, MarketAddressABi } from './constants';
 
 // info needed to be sent to IPFS when sending request
-const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0');
+const projectId = '2ELKxmXtRiTbhxxYo3Jr4399ZNf';
+const projectSecret = 'f6a6a70e8c3773346ff7c23a25efe604';
+const auth = `Basic ${Buffer.from(`${projectId}:${projectSecret}`).toString('base64')}`;
+const options = {
+  host: 'ipfs.infura.io',
+  protocol: 'https',
+  port: 5001,
+  apiPath: '/ipfs/api/v0',
+  headers: {
+    authorization: auth,
+  },
+};
+const dedicatedEndPoint = 'https://nftartmarketplace.infura-ipfs.io';
+const client = ipfsHttpClient(options);
 
 // Create a context which is simpler solution than Redux
 // used when less data is needed to be shared
@@ -59,7 +73,7 @@ export const NFTProvider = ({ children }) => {
     try {
       const added = await client.add({ content: file });
 
-      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      const url = `${dedicatedEndPoint}${added.path}`;
 
       return url;
     } catch (error) {
