@@ -15,7 +15,6 @@ const options = {
   host: 'ipfs.infura.io',
   protocol: 'https',
   port: 5001,
-  apiPath: '/ipfs/api/v0',
   headers: {
     authorization: auth,
   },
@@ -73,7 +72,7 @@ export const NFTProvider = ({ children }) => {
     try {
       const added = await client.add({ content: file });
 
-      const url = `${dedicatedEndPoint}${added.path}`;
+      const url = `${dedicatedEndPoint}/ipfs/${added.path}`;
 
       return url;
     } catch (error) {
