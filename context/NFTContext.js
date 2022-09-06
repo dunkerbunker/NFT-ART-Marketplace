@@ -5,7 +5,7 @@ import { ethers } from 'ethers';
 import axios from 'axios';
 import { create as ipfsHttpClient } from 'ipfs-http-client';
 
-import { MarketAddress, MarketAddressABi } from './constants';
+import { MarketAddress, MarketAddressABI } from './constants';
 
 // info needed to be sent to IPFS when sending request
 const projectId = '2ELKxmXtRiTbhxxYo3Jr4399ZNf';
@@ -19,8 +19,13 @@ const options = {
     authorization: auth,
   },
 };
-const dedicatedEndPoint = 'https://nftartmarketplace.infura-ipfs.io';
 const client = ipfsHttpClient(options);
+// end point. Needed in next.config.js as well
+const dedicatedEndPoint = 'https://nftartmarketplace.infura-ipfs.io';
+// ------------------------------
+
+// function to create contract when the seller or creator is passed in
+const fetchContract = (signerOrProvider) => new ethers.Contract(MarketAddress, MarketAddressABI, signerOrProvider);
 
 // Create a context which is simpler solution than Redux
 // used when less data is needed to be shared
@@ -80,9 +85,50 @@ export const NFTProvider = ({ children }) => {
     }
   };
 
+  // function that will be called when the user wants to create a new NFT
+  // called in createNFT() function
+  const createSale = async (url, formInputPrice, isReselling, id) => {
+    // set up the contract
+    const web3modal = new Web3Modal();
+    const connection = await web3modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    // who is making this NFT or sale
+    const signer = provider.getSigner();
+    // need to convert from number to Wei or Gwei
+    const price = ethers.utils.parseUnits(formInputPrice, 'ether');
+    const contract = fetchContract(signer);
+    const listingPrice = await contract.getListingPrice();
+
+    const transaction = await contract.createToken(url, price, { value: listingPrice.toString() });
+
+    await transaction.wait();
+  };
+
+  const createNFT = async (formInput, fileUrl, router) => {
+    const { name, description, price } = formInput;
+
+    if (!name || !description || !price || !fileUrl) {
+      return console.log('Missing form input values');
+    }
+
+    const data = JSON.stringify({ name, description, image: fileUrl });
+
+    try {
+      const added = await client.add(data);
+      // console.log(1);
+      const url = `${dedicatedEndPoint}/ipfs/${added.path}`;
+      // console.log(2);
+      await createSale(url, price);
+      // console.log(3);
+      router.push('/');
+    } catch (error) {
+      console.log('Error uploading file to IPFS: ', error);
+    }
+  };
+
   // returning the provider to be used in the app
   return (
-    <NFTContext.Provider value={{ nftCurrency, connectWallet, currentAccount, uploadToIPFS }}>
+    <NFTContext.Provider value={{ nftCurrency, connectWallet, currentAccount, uploadToIPFS, createNFT }}>
       {children}
     </NFTContext.Provider>
   );

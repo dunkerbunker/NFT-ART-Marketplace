@@ -12,8 +12,9 @@ const CreateNFT = () => {
   const [fileUrl, setFileUrl] = useState(null);
   const [fromInput, setFromInput] = useState({ price: '', name: '', description: '' });
   const { theme } = useTheme();
+  const router = useRouter();
   //  getting uploadToIPFS function from NFTContext
-  const { uploadToIPFS } = useContext(NFTContext);
+  const { uploadToIPFS, createNFT } = useContext(NFTContext);
 
   // function to be used in dropzone when dropped
   const onDrop = useCallback(async (acceptedFile) => {
@@ -61,9 +62,9 @@ const CreateNFT = () => {
                     src={images.upload}
                     width={100}
                     height={100}
-                    onjectFit="contain"
+                    objectFit="contain"
                     alt="file-upload"
-                    className={theme === 'light' && 'filter invert'}
+                    className={theme === 'light' ? 'filter invert' : ''}
                   />
                 </div>
 
@@ -94,28 +95,37 @@ const CreateNFT = () => {
           title="Name"
           placeholder="NFT art name"
           // spreading the formInput object and replacing what is needed
-          handleCLick={(e) => setFromInput({ ...fromInput, name: e.target.value })}
+          handleChange={(e) => setFromInput({ ...fromInput, name: e.target.value })}
         />
+        {/* <input
+          className="dark:bg-nft-black-1 bg-white border dark:border-nft-black-1 border-nft-gray-2 rounded-lg w-full outline-none font-poppins dark:text-white text-nft-gray-2 text-base mt-4 px-4 py-3"
+          placeholder="Test"
+          onChange={(e) => console.log(e.target.value)}
+        /> */}
         <Input
           inputType="textarea"
           title="Description"
           placeholder="NFT description"
           // spreading the formInput object and replacing what is needed
-          handleCLick={(e) => setFromInput({ ...fromInput, description: e.target.value })}
+          handleChange={(e) => setFromInput({ ...fromInput, description: e.target.value })}
         />
         <Input
           inputType="number"
           title="Price"
           placeholder="NFT Price"
           // spreading the formInput object and replacing what is needed
-          handleCLick={(e) => setFromInput({ ...fromInput, price: e.target.value })}
+          handleChange={(e) => setFromInput({ ...fromInput, price: e.target.value })}
         />
 
         <div className="mt-7 w-full flex justify-end">
           <Button
             btnName="Create NFT"
-            className="rounded-xl"
-            handleCLick={() => {}}
+            classStyles="rounded-xl"
+            handleClick={async () => {
+              // create NFT
+              console.log(fromInput);
+              await createNFT(fromInput, fileUrl, router);
+            }}
           />
         </div>
       </div>
