@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 
+import { NFTContext } from '../context/NFTContext';
 import { Banner, CreatorCard, NFTCard } from '../components';
 import images from '../assets';
 // function that makes a random id
@@ -15,6 +16,14 @@ const Home = () => {
   const scrollRef = useRef(null);
   // theme hook to get the current theme
   const { theme } = useTheme();
+  // context to get the data from the context
+  const { fetchNFTs } = useContext(NFTContext);
+
+  useEffect(() => {
+    // fetch the nfts from the context
+    fetchNFTs()
+      .then(() => {});
+  }, []);
 
   // function to check which direction to scroll when clicked
   const handleScroll = (direction) => {
