@@ -133,17 +133,17 @@ export const NFTProvider = ({ children }) => {
     const data = await contract.fetchMarketItems();
     // fetch all NFT simultaneously
     // map to get data from each NFT
-    const items = await Promise.all(data.map(async ({ tokenid, seller, owner, price: unformattedPrice }) => {
-      const tokenURI = await contract.tokenURI(tokenid);
+    const items = await Promise.all(data.map(async ({ tokenId, seller, owner, price: unformattedPrice }) => {
+      const tokenURI = await contract.tokenURI(tokenId);
       // get the metadata from the NFT url
       const { data: { image, name, description } } = await axios.get(tokenURI);
       // need to convert from number to Wei or Gwei
-      const price = ethers.utils.parseUnits(unformattedPrice, 'ether');
+      const price = ethers.utils.formatUnits(unformattedPrice.toString(), 'ether');
 
       // returning an object of data of each specific NFT
       return {
         price,
-        tokenid: tokenid.toNumber(),
+        tokenid: tokenId.toNumber(),
         seller,
         owner,
         image,
