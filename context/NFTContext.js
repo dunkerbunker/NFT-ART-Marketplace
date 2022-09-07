@@ -156,9 +156,48 @@ export const NFTProvider = ({ children }) => {
     return items;
   };
 
+  const fetchMyNFTsOrListedNFTs = async (type) => {
+    // set up the contract
+    const web3modal = new Web3Modal();
+    const connection = await web3modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    // who is making this NFT or sale
+    const signer = provider.getSigner();
+
+    const contract = fetchContract(signer);
+
+    const data = type === 'fetchItemsListed'
+      ? await contract.fetchItemsListed()
+      : await contract.fetchMyNFTs();
+
+    // map to get data from each NFT
+    const items = await Promise.all(data.map(async ({ tokenId, seller, owner, price: unformattedPrice }) => {
+      const tokenURI = await contract.tokenURI(tokenId);
+      // get the metadata from the NFT url
+      const { data: { image, name, description } } = await axios.get(tokenURI);
+      // need to convert from number to Wei or Gwei
+      const price = ethers.utils.formatUnits(unformattedPrice.toString(), 'ether');
+
+      // returning an object of data of each specific NFT
+      return {
+        price,
+        tokenid: tokenId.toNumber(),
+        seller,
+        owner,
+        image,
+        name,
+        description,
+        tokenURI,
+      };
+    }));
+
+    // items will be an array of objects
+    return items;
+  };
+
   // returning the provider to be used in the app
   return (
-    <NFTContext.Provider value={{ nftCurrency, connectWallet, currentAccount, uploadToIPFS, createNFT, fetchNFTs }}>
+    <NFTContext.Provider value={{ nftCurrency, connectWallet, currentAccount, uploadToIPFS, createNFT, fetchNFTs, fetchMyNFTsOrListedNFTs }}>
       {children}
     </NFTContext.Provider>
   );
