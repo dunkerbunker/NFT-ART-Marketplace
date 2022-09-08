@@ -12,12 +12,14 @@ const ListedNFTs = () => {
     // fetch the nfts from the context
     fetchMyNFTsOrListedNFTs('fetchItemsListed')
       .then((items) => {
-        console.log(items);
+        // console.log(items);
+        // get nfts from conext and stop loading animation
         setNfts(items);
         setIsLoading(false);
       });
   }, []);
 
+  // load until the nfts are fetched
   if (isLoading) {
     return (
       <div className="flexStart min-h-screen">
@@ -26,6 +28,7 @@ const ListedNFTs = () => {
     );
   }
 
+  // if there are no nfts, show a message
   if (!isLoading && nfts.length === 0) {
     return (
       <div className="flexCenter sm:p-4 p-16 min-h-screen">
@@ -44,6 +47,7 @@ const ListedNFTs = () => {
             NFTs Listed for Sale
           </h2>
           <div className="mt-3 w-full flex flex-wrap justify-start md:justify-center">
+            {/* map through the nfts and render a card for each one */}
             {nfts.map((nft) => <NFTCard key={nft.tokenId} nft={nft} />)}
           </div>
         </div>

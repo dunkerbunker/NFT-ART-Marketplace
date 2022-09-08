@@ -11,6 +11,7 @@ const MyNFTs = () => {
   const [nfts, setNfts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+    // load until the nfts are fetched
   if (isLoading) {
     return (
       <div className="flexStart min-h-screen">
@@ -37,18 +38,21 @@ const MyNFTs = () => {
             />
           </div>
           <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-2xl mt-6">
+            {/* get shortened address of the current account */}
             {shortenAddress(currentAccount)}
           </p>
         </div>
       </div>
 
       {!isLoading && !nfts.length ? (
+        // if there are no nfts, show a message
         <div className="flexCenter sm:p-4 p-16">
           <h1 className="font-poppins dark:text-white text-nft-black-1 font-extrabold text-3xl">
             No NFTs Owned
           </h1>
         </div>
       ) : (
+        // if there are nfts, show this
         <div className="sm:px-4 p-12 w-full minmd:w-4/5 flexCenter flex-col">
           <div className="flex-1 w-full flex flex-row sm:flex-col px-4 xs:px-0 minlg:px-8">
             SearchBar

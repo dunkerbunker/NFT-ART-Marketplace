@@ -105,21 +105,25 @@ export const NFTProvider = ({ children }) => {
   };
 
   const createNFT = async (formInput, fileUrl, router) => {
+    // getting properties from formInput
     const { name, description, price } = formInput;
-
+    // check if all data is present
     if (!name || !description || !price || !fileUrl) {
       return console.log('Missing form input values');
     }
-
+    // makeing data into json
     const data = JSON.stringify({ name, description, image: fileUrl });
 
     try {
+      // uploading to IPFS
       const added = await client.add(data);
       // console.log(1);
+      // get link
       const url = `${dedicatedEndPoint}/ipfs/${added.path}`;
       // console.log(2);
       await createSale(url, price);
       // console.log(3);
+      // go to home page
       router.push('/');
     } catch (error) {
       console.log('Error uploading file to IPFS: ', error);
