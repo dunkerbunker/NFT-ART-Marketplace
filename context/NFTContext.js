@@ -199,9 +199,34 @@ export const NFTProvider = ({ children }) => {
     return items;
   };
 
+  const buyNFT = async (nft) => {
+    // set up the contract
+    const web3modal = new Web3Modal();
+    const connection = await web3modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    // who is making this NFT or sale
+    const signer = provider.getSigner();
+    const contract = fetchContract(signer);
+
+    // need to convert from number to Wei or Gwei
+    const price = ethers.utils.parseUnits(nft.price.toString(), 'ether');
+
+    const transaction = await contract.createMarketSale(nft.tokenid, { value: price });
+    await transaction.wait();
+  };
+
   // returning the provider to be used in the app
   return (
-    <NFTContext.Provider value={{ nftCurrency, connectWallet, currentAccount, uploadToIPFS, createNFT, fetchNFTs, fetchMyNFTsOrListedNFTs }}>
+    <NFTContext.Provider
+      value={{ nftCurrency,
+        connectWallet,
+        currentAccount,
+        uploadToIPFS,
+        createNFT,
+        fetchNFTs,
+        fetchMyNFTsOrListedNFTs,
+        buyNFT }}
+    >
       {children}
     </NFTContext.Provider>
   );
