@@ -11,6 +11,17 @@ const MyNFTs = () => {
   const [nfts, setNfts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  useEffect(() => {
+    // fetch the nfts from the context
+    fetchMyNFTsOrListedNFTs()
+      .then((items) => {
+        // console.log(items);
+        // get nfts from conext and stop loading animation
+        setNfts(items);
+        setIsLoading(false);
+      });
+  }, []);
+
   // load until the nfts are fetched
   if (isLoading) {
     return (
