@@ -123,7 +123,6 @@ const CreateNFT = () => {
             classStyles="rounded-xl"
             handleClick={async () => {
               // create NFT
-              console.log(fromInput);
               await createNFT(fromInput, fileUrl, router);
             }}
           />

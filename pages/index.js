@@ -27,7 +27,7 @@ const Home = () => {
     fetchNFTs()
       .then((items) => {
         setNfts(items);
-        console.log(items);
+        // console.log(items);
       });
   }, []);
 

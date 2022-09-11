@@ -89,6 +89,7 @@ export const NFTProvider = ({ children }) => {
   // called in createNFT() function
   const createSale = async (url, formInputPrice, isReselling, id) => {
     // set up the contract
+    console.log(formInputPrice);
     const web3modal = new Web3Modal();
     const connection = await web3modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
@@ -96,14 +97,17 @@ export const NFTProvider = ({ children }) => {
     const signer = provider.getSigner();
     // need to convert from number to Wei or Gwei
     const price = ethers.utils.parseUnits(formInputPrice, 'ether');
+    console.log(price);
     const contract = fetchContract(signer);
     const listingPrice = await contract.getListingPrice();
+    console.log('listing price: ', listingPrice);
 
     // check if user is listing or resslling and perform transaction
     // createToken and resellToken are functions in the contract
     const transaction = !isReselling
       ? await contract.createToken(url, price, { value: listingPrice.toString() })
       : await contract.resellToken(id, price, { value: listingPrice.toString() });
+    console.log(transaction);
     await transaction.wait();
   };
 
