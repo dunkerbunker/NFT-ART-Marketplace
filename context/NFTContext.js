@@ -228,7 +228,8 @@ export const NFTProvider = ({ children }) => {
         createNFT,
         fetchNFTs,
         fetchMyNFTsOrListedNFTs,
-        buyNFT }}
+        buyNFT,
+        createSale }}
     >
       {children}
     </NFTContext.Provider>

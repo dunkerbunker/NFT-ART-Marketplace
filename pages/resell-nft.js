@@ -19,7 +19,7 @@ const ResellNFT = () => {
 
     const { data } = await axios.get(tokenURI);
 
-    setPrice(data.price);
+    // setPrice(data.price);
     setImage(data.image);
     setIsLoading(false);
   };
@@ -29,6 +29,7 @@ const ResellNFT = () => {
   }, [tokenURI]);
 
   const resell = async () => {
+    console.log(price);
     await createSale(tokenURI, price, true, tokenId);
     router.push('/');
   };
@@ -53,7 +54,9 @@ const ResellNFT = () => {
           inputType="number"
           title="Price"
           placeholder="Enter price"
-          handleChange={(e) => setPrice(e.target.value)}
+          handleChange={(e) => {
+            setPrice(e.target.value);
+          }}
         />
 
         {image && <img src={image} className="rounded mt-4" width={350} />}
