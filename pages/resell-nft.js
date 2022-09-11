@@ -29,7 +29,7 @@ const ResellNFT = () => {
   }, [tokenURI]);
 
   const resell = async () => {
-    console.log(price);
+    console.log(price, tokenURI, tokenId);
     await createSale(tokenURI, price, true, tokenId);
     router.push('/');
   };

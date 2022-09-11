@@ -89,7 +89,6 @@ export const NFTProvider = ({ children }) => {
   // called in createNFT() function
   const createSale = async (url, formInputPrice, isReselling, id) => {
     // set up the contract
-    console.log(formInputPrice);
     const web3modal = new Web3Modal();
     const connection = await web3modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
