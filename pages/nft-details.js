@@ -138,16 +138,26 @@ const NFTDetails = () => {
         </div>
         <div className="flex flex-row sm:flex-col mt-10">
           {currentAccount === nft.seller.toLowerCase() ? (
+            // if current account is the seller of the nft
             <p className="font-poppins dark:text-white text-nft-black-1 text-base font-normal border border-gray p-2">
               You can cannot buy your own NFT
             </p>
-          ) : (
-            <Button
-              btnName={`Buy for ${nft.price} ${nftCurrency}`}
-              classStyles="mr-5 sm:mr-0 rounded-xl"
-              handleClick={() => setPaymentModal(true)}
-            />
-          )}
+          ) : currentAccount === nft.owner.toLowerCase()
+            ? (
+              // if current account is the owner of the nft
+              <Button
+                btnName="List on Marketplace"
+                classStyles="mr-5 sm:mr-0 sm:mb-5 rounded-xl"
+                handleClick={() => router.push(`/resell-nft?tokenId=${nft.tokenId}&tokenURI=${nft.tokenURL}`)}
+              />
+            ) : (
+              // if current account is a buyer of the nft
+              <Button
+                btnName={`Buy for ${nft.price} ${nftCurrency}`}
+                classStyles="mr-5 sm:mr-0 sm:mb-5 rounded-xl"
+                handleClick={() => setPaymentModal(true)}
+              />
+            )}
         </div>
       </div>
       {paymentModal && (
