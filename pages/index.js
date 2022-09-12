@@ -7,6 +7,7 @@ import { Banner, CreatorCard, NFTCard } from '../components';
 import images from '../assets';
 // function that makes a random id
 import { makeId } from '../utils/makeId';
+import { getCreators } from '../utils/getTopCreators';
 
 const Home = () => {
   // state to check when to show scroll buttons
@@ -27,7 +28,7 @@ const Home = () => {
     fetchNFTs()
       .then((items) => {
         setNfts(items);
-        // console.log(items);
+        console.log(items);
       });
   }, []);
 
@@ -67,6 +68,8 @@ const Home = () => {
       window.removeEventListener('resize', isScrollable);
     };
   });
+
+  const topCreators = getCreators(nfts);
 
   return (
     <div>
