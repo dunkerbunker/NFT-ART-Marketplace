@@ -8,8 +8,8 @@ import { create as ipfsHttpClient } from 'ipfs-http-client';
 import { MarketAddress, MarketAddressABI } from './constants';
 
 // info needed to be sent to IPFS when sending request
-const projectId = '2ELKxmXtRiTbhxxYo3Jr4399ZNf';
-const projectSecret = 'f6a6a70e8c3773346ff7c23a25efe604';
+const projectId = process.env.NEXT_PUBLIC_IPFS_PROJECT_ID;
+const projectSecret = process.env.NEXT_PUBLIC_IPFS_PROJECT_SECRET;
 const auth = `Basic ${Buffer.from(`${projectId}:${projectSecret}`).toString('base64')}`;
 const options = {
   host: 'ipfs.infura.io',
@@ -21,7 +21,7 @@ const options = {
 };
 const client = ipfsHttpClient(options);
 // end point. Needed in next.config.js as well
-const dedicatedEndPoint = 'https://nftartmarketplace.infura-ipfs.io';
+const dedicatedEndPoint = process.env.NEXT_PUBLIC_IPFS_DEDICATED_ENDPOINT;
 // ------------------------------
 
 // function to create contract when the seller or creator is passed in
