@@ -8,6 +8,7 @@ import images from '../assets';
 // function that makes a random id
 import { makeId } from '../utils/makeId';
 import { getCreators } from '../utils/getTopCreators';
+import { shortenAddress } from '../utils/shortenAddress';
 
 const Home = () => {
   // state to check when to show scroll buttons
@@ -28,7 +29,6 @@ const Home = () => {
     fetchNFTs()
       .then((items) => {
         setNfts(items);
-        console.log(items);
       });
   }, []);
 
@@ -70,6 +70,8 @@ const Home = () => {
   });
 
   const topCreators = getCreators(nfts);
+  console.log(topCreators);
+  console.log(nfts);
 
   return (
     <div>
@@ -94,7 +96,17 @@ const Home = () => {
                 className="flex flex-row w-max overflow-x-scroll no-scrollbar select-none"
                 ref={scrollRef}
               >
-                {/* map through the top creators */}
+                {topCreators && topCreators.map((creator, i) => (
+                  // custom component  from import
+                  <CreatorCard
+                    key={`creator-${i}`}
+                    rank={i + 1}
+                    creatorImage={images[`creator${i + 1}`]}
+                    creatorName={shortenAddress(creator.seller)}
+                    creatorEths={creator.sum}
+                  />
+                ))}
+                {/* map through the top creators
                 {[6, 7, 8, 9, 10].map((i) => (
                   // custom component  from import
                   <CreatorCard
@@ -104,7 +116,7 @@ const Home = () => {
                     creatorName={`0x${makeId(3)}...${makeId(4)}`}
                     creatorEths={10 - i * 0.5}
                   />
-                ))}
+                ))} */}
                 {/* when hideButton state is true show buttons */}
                 {!hideButtons && (
                   <>
