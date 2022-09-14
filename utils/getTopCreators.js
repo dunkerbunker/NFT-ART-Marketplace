@@ -6,15 +6,12 @@ export const getCreators = (nfts) => {
       return creatorObject;
     }, {});
 
-    Object.entries(creators).map((creator) => {
+    return Object.entries(creators).map((creator) => {
       const seller = creator[0];
       const sum = creator[1].map((item) => Number(item.price)).reduce((prev, curr) => prev + curr, 0);
 
-      // if seller is not empty
       return ({ seller, sum });
     });
-    // object entries
-    // [[A, B, C], [[ {}, {} ]]]
   }
 };
 

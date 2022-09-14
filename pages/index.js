@@ -70,8 +70,8 @@ const Home = () => {
   });
 
   const topCreators = getCreators(nfts);
-  console.log(topCreators);
-  console.log(nfts);
+  console.log('top Creators', topCreators);
+  console.log('nfts', nfts);
 
   return (
     <div>
