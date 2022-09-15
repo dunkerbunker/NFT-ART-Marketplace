@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useTheme } from 'next-themes';
 
 import { NFTContext } from '../context/NFTContext';
-import { Banner, CreatorCard, NFTCard } from '../components';
+import { Banner, CreatorCard, NFTCard, SearchBar } from '../components';
 import images from '../assets';
 // function that makes a random id
 import { makeId } from '../utils/makeId';
@@ -13,8 +13,10 @@ import { shortenAddress } from '../utils/shortenAddress';
 const Home = () => {
   // state to check when to show scroll buttons
   const [hideButtons, setHideButtons] = useState(false);
+  const [nfts, setNfts] = useState([]);
 
-  const [nfts, setNfts] = useState();
+  const [nftsCopy, setNftsCopy] = useState([]);
+  const [activeSelect, setActiveSelect] = useState('Recently added');
 
   // ref to identify scroll element and its parent
   const parentRef = useRef(null);
@@ -29,8 +31,47 @@ const Home = () => {
     fetchNFTs()
       .then((items) => {
         setNfts(items);
+        setNftsCopy(items);
       });
   }, []);
+
+  useEffect(() => {
+    const sortedNfts = [...nfts];
+
+    switch (activeSelect) {
+      case 'Price (low to high)':
+        setNfts(sortedNfts.sort((a, b) => a.price - b.price));
+        break;
+      case 'Price (high to low)':
+        setNfts(sortedNfts.sort((a, b) => b.price - a.price));
+        break;
+      case 'Recently added':
+        setNfts(sortedNfts.sort((a, b) => b.tokenId - a.tokenId));
+        break;
+      default:
+        setNfts(nfts);
+        break;
+    }
+  }, [activeSelect]);
+
+  const onHandleSearch = (value) => {
+    // name object is immediatly destructured from the nft object
+    // and used for filtering. does not matter if lowercase or uppercase
+    // thus all is made into lower for search
+    const filteredNfts = nfts.filter(({ name }) => name.toLowerCase().includes(value.toLowerCase()));
+
+    if (filteredNfts.length) {
+      setNfts(filteredNfts);
+    } else {
+      setNfts(nftsCopy);
+    }
+  };
+
+  const onClearSearch = () => {
+    if (nfts.length && nftsCopy.length) {
+      setNfts(nftsCopy);
+    }
+  };
 
   // function to check which direction to scroll when clicked
   const handleScroll = (direction) => {
@@ -69,9 +110,9 @@ const Home = () => {
     };
   });
 
-  const topCreators = getCreators(nfts);
-  console.log('top Creators', topCreators);
-  console.log('nfts', nfts);
+  const topCreators = getCreators(nftsCopy);
+  // console.log('top Creators', topCreators);
+  // console.log('nfts', nfts);
 
   return (
     <div>
@@ -158,7 +199,14 @@ const Home = () => {
               <h1 className="flex-1 before:first:font-poppins dark:text-white text-nft-black-1 text-2xl minlg:text-4xl font-semibold sm:mb-4">
                 Trending Art
               </h1>
-              <div>SeatchBar</div>
+              <div className="flex-2 sm:w-full flex flex-row sm:flex-col">
+                <SearchBar
+                  activeSelect={activeSelect}
+                  setActiveSelect={setActiveSelect}
+                  handleSearch={onHandleSearch}
+                  clearSearch={onClearSearch}
+                />
+              </div>
             </div>
             {/* creating a flex wrapper and mapping the trending NFT art in it */}
             <div className="mt-3 w-full flex flex-wrap justify-start md:justify-center">
