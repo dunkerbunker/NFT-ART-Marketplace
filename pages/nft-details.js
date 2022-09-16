@@ -62,7 +62,7 @@ const PaymentBodyCmp = ({ nft, nftCurrency }) => (
 );
 
 const NFTDetails = () => {
-  const { currentAccount, nftCurrency, buyNFT } = useContext(NFTContext);
+  const { currentAccount, nftCurrency, buyNFT, isLoadingNFT } = useContext(NFTContext);
   const [isLoading, setIsLoading] = useState(true);
   const [nft, setNft] = useState({ image: '', tokenId: '', name: '', owner: '', price: '', seller: '' });
   const router = useRouter();
@@ -160,6 +160,7 @@ const NFTDetails = () => {
             )}
         </div>
       </div>
+
       {paymentModal && (
         <Modal
           header="Check Out"
@@ -182,6 +183,20 @@ const NFTDetails = () => {
         />
       )}
 
+      {isLoadingNFT && (
+        <Modal
+          header="Buying NFT..."
+          body={(
+            <div className="flexCenter flex-col text-center">
+              <div className="relative w-52 h-52">
+                <Loader />
+              </div>
+            </div>
+          )}
+          handleClose={() => setPaymentModal(false)}
+        />
+      )}
+
       {successModal && (
         <Modal
           header="Payment Successful"
@@ -198,11 +213,11 @@ const NFTDetails = () => {
                 />
               </div>
               <p className="font-poppins dark:text-white text-nft-black-1 text-sm minlg:text-xl font-normal mt-10">
-                You have successfully purchased
+                You have successfully purchased &nbsp;
                 <span className="font-semibold">
-                  {nft.name}
+                  {nft.name} &nbsp;
                 </span>
-                from
+                from &nbsp;
                 <span className="font-semibold">
                   {shortenAddress(nft.seller)}
                 </span>
