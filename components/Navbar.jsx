@@ -95,6 +95,17 @@ const Navbar = () => {
   const [active, setActive] = useState('Explore NFTs');
   const [isOpen, setIsOpen] = useState(false);
 
+  // use effect for when app starts
+  // chekcs mode and sets theme accordingly
+  useEffect(() => {
+    // if (localStorage.getItem('theme') === 'light') {
+    //   setTheme('light');
+    // } else {
+    //   setTheme('dark');
+    // }
+    setTheme('dark');
+  }, []);
+
   // checks if the active tab is correct on page change
   useEffect(() => {
     checkActive(active, setActive, router);
@@ -179,7 +190,7 @@ const Navbar = () => {
             alt="close"
             onClick={() => setIsOpen(false)}
             // invert color based on theme
-            className={`${theme === 'light' && 'filter-invert'}`}
+            className={theme === 'light' ? 'filter invert' : ''}
           />
         ) : (
           // mobile naviation bar close icon
@@ -190,7 +201,7 @@ const Navbar = () => {
             height={25}
             alt="menu"
             onClick={() => setIsOpen(true)}
-            className={`${theme === 'light' && 'filter-invert'}`}
+            className={theme === 'light' ? 'filter invert' : ''}
           />
         )}
         {/* Mobile navigation bar end  */}

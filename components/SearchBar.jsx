@@ -49,7 +49,7 @@ const SearchBar = ({ activeSelect, setActiveSelect, handleSearch, clearSearch })
       </div>
       <div
         onClick={() => setToggle((prevToggle) => !prevToggle)}
-        className="relative flexBetween ml-4 sm:ml-0 sm:mt-2 min-w-190 cursor-pointer dark:bg-nft-black-2 bg-white border dark:border-nft-black-2 border-nft-gray-2 px-4 rounded-md"
+        className="relative flexBetween ml-4 sm:ml-0 sm:mt-2 min-w-190 cursor-pointer dark:bg-nft-black-2 bg-white border dark:border-nft-black-2 border-nft-gray-2 px-4 py-3 rounded-md"
       >
         <p className="font-poppins dark:text-white text-nft-black-1 font-normal text-sm">
           {activeSelect}

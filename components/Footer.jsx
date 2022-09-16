@@ -71,7 +71,7 @@ const Footer = () => {
                   width={24}
                   height={24}
                   alt="social media"
-                  className={`${theme === 'light' && 'filter-invert'}`}
+                  className={theme === 'light' ? 'filter invert' : ''}
                 />
               </div>
             ))}
