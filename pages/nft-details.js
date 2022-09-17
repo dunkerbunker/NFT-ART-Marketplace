@@ -196,7 +196,6 @@ const NFTDetails = () => {
           handleClose={() => setPaymentModal(false)}
         />
       )}
-
       {successModal && (
         <Modal
           header="Payment Successful"
