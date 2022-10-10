@@ -125,6 +125,7 @@ const Home = () => {
             childStyles="md:text-4xl sm:text-2xl xs:text-xl text-left"
             name={<>Discover, collect and sell <br /> extraordinary NFTs </>}
           />
+          {/* !isLoading && !nfts.length */}
           {!isLoading && !nfts.length ? (
             <h1 className="font-poppins dark:text-white text-nft-black-1 text-2xl minlf:text-4xl font-semibold ml-4 xs:ml-0">
               That&apos;s weird... No NFTs found. Please try again later.
@@ -154,17 +155,17 @@ const Home = () => {
                         creatorEths={creator.sum}
                       />
                     ))}
-                    {/* map through the top creators
-                {[6, 7, 8, 9, 10].map((i) => (
-                  // custom component  from import
-                  <CreatorCard
-                    key={`creator-${i}`}
-                    rank={i}
-                    creatorImage={images[`creator${i}`]}
-                    creatorName={`0x${makeId(3)}...${makeId(4)}`}
-                    creatorEths={10 - i * 0.5}
-                  />
-                ))} */}
+                    {/* map through the top creators */}
+                    {/* {[6, 7, 8, 9, 10].map((i) => (
+                      // custom component  from import
+                      <CreatorCard
+                        key={`creator-${i}`}
+                        rank={i}
+                        creatorImage={images[`creator${i}`]}
+                        creatorName={`0x${makeId(3)}...${makeId(4)}`}
+                        creatorEths={10 - i * 0.5}
+                      />
+                    ))} */}
                     {/* when hideButton state is true show buttons */}
                     {!hideButtons && (
                     <>
@@ -223,19 +224,19 @@ const Home = () => {
                       nft={nft}
                     />
                   ))}
-                  {/* {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
-                <NFTCard
-                  key={`nft-${i}`}
-                  nft={{
-                    i,
-                    name: `Nifty NFT ${i}`,
-                    price: (10 - i * 0.534).toFixed(2),
-                    seller: `0x${makeId(3)}...${makeId(4)}`,
-                    owner: `0x${makeId(3)}...${makeId(4)}`,
-                    description: 'cool NFT on Sale',
-                  }}
-                />
-              ))} */}
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+                    <NFTCard
+                      key={`nft-${i}`}
+                      nft={{
+                        i,
+                        name: `Nifty NFT ${i}`,
+                        price: (10 - i * 0.534).toFixed(2),
+                        seller: `0x${makeId(3)}...${makeId(4)}`,
+                        owner: `0x${makeId(3)}...${makeId(4)}`,
+                        description: 'cool NFT on Sale',
+                      }}
+                    />
+                  ))}
                 </div>
               </div>
             </>
