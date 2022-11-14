@@ -224,7 +224,7 @@ const Home = () => {
                       nft={nft}
                     />
                   ))}
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+                  {/* {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
                     <NFTCard
                       key={`nft-${i}`}
                       nft={{
@@ -236,7 +236,7 @@ const Home = () => {
                         description: 'cool NFT on Sale',
                       }}
                     />
-                  ))}
+                  ))} */}
                 </div>
               </div>
             </>
