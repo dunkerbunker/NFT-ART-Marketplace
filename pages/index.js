@@ -156,7 +156,7 @@ const Home = () => {
                       />
                     ))}
                     {/* map through the top creators */}
-                    {/* {[6, 7, 8, 9, 10].map((i) => (
+                    {[6, 7, 8, 9, 10].map((i) => (
                       // custom component  from import
                       <CreatorCard
                         key={`creator-${i}`}
@@ -165,7 +165,7 @@ const Home = () => {
                         creatorName={`0x${makeId(3)}...${makeId(4)}`}
                         creatorEths={10 - i * 0.5}
                       />
-                    ))} */}
+                    ))}
                     {/* when hideButton state is true show buttons */}
                     {!hideButtons && (
                     <>
@@ -224,7 +224,7 @@ const Home = () => {
                       nft={nft}
                     />
                   ))}
-                  {/* {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
                     <NFTCard
                       key={`nft-${i}`}
                       nft={{
@@ -236,7 +236,7 @@ const Home = () => {
                         description: 'cool NFT on Sale',
                       }}
                     />
-                  ))} */}
+                  ))}
                 </div>
               </div>
             </>
